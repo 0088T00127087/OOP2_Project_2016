@@ -8,19 +8,21 @@ public class County {
 
 	
 	public String name;
-	public String home_Ground;
-	public String county;
-	public String level;
+	public int level;
 	
 	
 	// Constructor method
 	public County(){
+		this("unknown", 0);
+	}
+	
+	public County(String name, int x){
 		
 		setName(name);
-		setHome_Ground(home_Ground);
-		setCounty(county);
-		setLevel(level);
+		setLevel(x);
 	}
+	
+	
 	
 	
 	// Getter and Setter Methods
@@ -39,36 +41,20 @@ public class County {
 		this.name = name;
 	}
 	
+			
 	
-	public String getHome_Ground() {
-		return home_Ground;
-	}
-	
-	
-	public void setHome_Ground(String home_Ground) {
-		this.home_Ground = home_Ground;
-	}
-	
-	
-	public String getCounty() {
-		return county;
-	}
-	
-	
-	public void setCounty(String county) {
-		this.county = county;
-	}
-	
-	
-	public String getLevel() {
+	public int getLevel() {
 		return level;
 	}
 	
-	public void setLevel(String level) {
+	public void setLevel(int level) {
 		this.level = level;
 	}
 	
 	
+	public String toString(){
+		return "Name" + getName() +  "Level" + getLevel();
+	}
 	
 	
 	

@@ -51,11 +51,11 @@ public class RandomNames {
 
 public class RandomNames {
 	
-	public String[] Beginning = { "Joe", "John", "Mike", "Patrick", "Eoin", "Luke", "Tommy", "James",  "Brendan", "Maurice", "Ogie" 
-			};
+	public String[] Beginning = { "Joe", "John", "Mike", "Patrick", "Eoin", "Luke", "Tommy", "James",  "Brendan", "Maurice", "Ogie", 
+			"David", "Neil", "Philip"};
 	
 	public String[] End = {"Enright", "Walsh", "O Shea", "Cooper", "Rock", "Fitzgerald", "O Riordan",
-			"Dillane", "McCarthy" };
+			"Dillane", "McCarthy", "Moran", "Donaghy", "Spillane", "Flaharty" };
 	
 	public Random rand = new Random();
 	
