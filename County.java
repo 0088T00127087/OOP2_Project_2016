@@ -1,30 +1,30 @@
 
 public class County {
 
-	public String name;
+	public String countyName;
 	public int points;
 	public int gamesPlayed;
 	
 	public County(){
-		name = "unknown";
+		countyName = "unknown";
 		points = 0;
 		gamesPlayed = 0;
 	}
 	
 	
 	public County(String name, int points, int gamesPlayed){
-		this.name = name;
+		this.countyName = name;
 		this.points = points;
 		this.gamesPlayed = gamesPlayed;
 	}
 	
 	
-	public void setName(String name){
-		this.name = name;
+	public void setcountyName(String name){
+		this.countyName = name;
 	}
 	
-	public String getName(){
-		return name;
+	public String getcountyName(){
+		return countyName;
 	}
 	
 	public void setPoints(int points){
@@ -47,7 +47,7 @@ public class County {
 	
 	
 	public String toString(){
-		return getName() + " \t\t " + getGamesPlayed() + "\t\t   "+ getPoints();
+		return getcountyName() + " \t\t " + getGamesPlayed() + "\t\t   "+ getPoints();
 	}
 	
 	

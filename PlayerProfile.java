@@ -3,30 +3,30 @@
  */
 public class PlayerProfile extends County {
 	
-	public String name;
+	public String playerName;
 	public String county;
 	
 	
 	public PlayerProfile(){
-	
-		setName(name);
-		setCounty(county);
+		super();
+		this.playerName = "unknown";
+		
 		
 	}
 	
 	public PlayerProfile(String name, String county){
 		
-		this.name = name;
+		this.playerName = name;
 		this.county = county;
 	}
 	
 	
 	public void setName(String name){
-		this.name = name;
+		this.playerName = name;
 	}
 	
 	public String getName(){
-		return name;
+		return playerName;
 	}
 	
 	public void setCounty(String county){
@@ -39,7 +39,7 @@ public class PlayerProfile extends County {
 	
 	
 	public String toString(){
-		return "Player Name: " + getName() + "\nCounty: " + getCounty();
+		return "Player Name: " + getName() + super.toString();
 	}
 
 }
