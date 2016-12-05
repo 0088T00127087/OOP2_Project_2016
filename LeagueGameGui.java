@@ -29,6 +29,7 @@ public class LeagueGameGui {
 	public static String plName;
 	public static String plCounty;
 	public static int playerIndex = 0;
+	public static int numGames = 1;
 	JTextArea table;
 	
 	public LeagueGameGui(PlayerProfile pf){
@@ -54,7 +55,7 @@ public class LeagueGameGui {
 		cPane.add(saveGameBtn = new JButton("Save Game"));
 		frame.add(cPane);
 		
-		System.out.println(pf.toString());
+		//System.out.println(pf.toString());
 		// Placement of ojects in cPane
 		nameLbl.setBounds(25, 10, 100, 100);
 		countyLbl.setBounds(25, 20, 100, 100);
@@ -71,7 +72,7 @@ public class LeagueGameGui {
 		county[0].setcountyName(pf.getcountyName());
 		county[0].setGamesPlayed(0);
 		county[0].setPoints(0);
-	int playerIndex = 0;
+	
 		
 		// String array of county names
 		String [] counties = new String[]{"Antrim", "Cork", "Kerry", "Dublin", "Mayo", "Clare",
@@ -97,27 +98,45 @@ public class LeagueGameGui {
 			table.append("\n" + county[i].toString());
 		}
 		
-		int gamesNumber = 0;
-		int numGames = 1;
+		getPlayerIndex(county);
+		
+		
 		
 		nextGameBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				
 				getPlayerIndex(county);
 				
-				playGame(county[pf.getPlayerIndex()], county[1]);
+				JOptionPane.showMessageDialog(null, pf.toString());
 				
-				sortTable(county);
+				if(numGames < 12){
+				playGame(county[playerIndex], county[numGames]);
+				
+				
+				
+				
+				
+				
+				numGames++;
+				
 				
 				table.setText("");
 				table.append("County \t\t            Games  Points");
 				table.append("\n--------------------------------------------------------------------------");
 				
 				for(int i = 0; i < county.length; i++){
-					
+					sortTable(county);
 					table.append("\n" + county[i].toString());
 				}
-								
+				if(numGames > 12) {
+					JOptionPane.showMessageDialog(null, "No More games to play this season");
+				}
+				
+				}
+				
+				
+				
 			}
 		});
 		
@@ -150,7 +169,7 @@ public class LeagueGameGui {
 		public static void getPlayerIndex(County[] table){
 			
 			County c = new County();
-			sortTable(table);
+			
 			for(int i = 0 ; i < table.length; i ++){
 				
 				if(table[i].getcountyName() == plCounty){
