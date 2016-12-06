@@ -1,7 +1,9 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -76,16 +78,23 @@ public class LeagueGameGui {
 		
 		// String array of county names
 		String [] counties = new String[]{"Antrim", "Cork", "Kerry", "Dublin", "Mayo", "Clare",
-				  "Tipparary", "WaterFord", "Limerick", "Galway", 
-				  "Rosscommon", "Sligo", "Leitrim", "Killkenny", "Meath",
-				  "WestMeath", "Offily", "Wexford", "Wicklow",
-				  "Tyrone", "Derry", "Monaghan", "Donegal", "Farmanagh"};
-		
+				  						  "Tipparary", "WaterFord", "Limerick", "Galway", 
+				  						  "Rosscommon", "Sligo", "Leitrim", "Killkenny", "Meath",
+				  						  "WestMeath", "Offily", "Wexford", "Wicklow",
+				  						  "Tyrone", "Derry", "Monaghan", "Donegal", "Farmanagh",
+				  						  "Louth", "Cavan", "Longford", "Carlow", "Armagh","Kildare","Down"};
+	
 		
 		// For loop to initialise the array of county objects
 		for(int i = 1; i < county.length; i++){
 			county[i] = new County();
 			county[i].setcountyName(counties[rand.nextInt(counties.length)]);
+			for(int j = 0; j <= county.length; j++ ){
+				// Check to see if 
+				if(county[0].getcountyName() == county[i].getcountyName()){
+					county[i].setcountyName(counties[rand.nextInt(counties.length)]);
+				}
+			}
 			county[i].setGamesPlayed(0);
 			county[i].setPoints(0);
 				 
@@ -108,17 +117,13 @@ public class LeagueGameGui {
 				
 				getPlayerIndex(county);
 				
-				JOptionPane.showMessageDialog(null, pf.toString());
+				//JOptionPane.showMessageDialog(null, pf.toString());
 				
 				if(numGames < 12){
 				playGame(county[playerIndex], county[numGames]);
-				
-				
-				
-				
-				
-				
+				pf.setGamesPlayed(pf.gamesPlayed+1);
 				numGames++;
+				
 				
 				
 				table.setText("");
@@ -129,8 +134,33 @@ public class LeagueGameGui {
 					sortTable(county);
 					table.append("\n" + county[i].toString());
 				}
-				if(numGames > 12) {
+				if(pf.getGamesPlayed() == 11) {
 					JOptionPane.showMessageDialog(null, "No More games to play this season");
+					
+					for(int i = 0; i < county.length; i++){
+						for(int j = 1; j < county.length-i; j++){
+							if(county[i].getGamesPlayed() == 11){
+								playGame(county[j], county[i]);
+								county[1].setGamesPlayed(county[1].gamesPlayed + 1);
+								
+								table.setText("");
+								table.append("County \t\t            Games  Points");
+								table.append("\n--------------------------------------------------------------------------");
+								
+								for(int x = 0; x < county.length; x++){
+									sortTable(county);
+									table.append("\n" + county[x].toString());
+								}
+								
+								
+								
+								
+							}
+						}
+						
+					}
+					
+					
 				}
 				
 				}
@@ -195,7 +225,9 @@ public class LeagueGameGui {
 				}
 			}
 		}
-	
+		
+		
+		
 	
 	
 		public static int goalGenerator(){
