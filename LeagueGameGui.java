@@ -115,7 +115,7 @@ public class LeagueGameGui {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				getPlayerIndex(county);
+				
 				
 				//JOptionPane.showMessageDialog(null, pf.toString());
 				
@@ -141,6 +141,8 @@ public class LeagueGameGui {
 				for(int i = 0; i < county.length; i++){
 					sortTable(county);
 					table.append("\n" + county[i].toString());
+					
+					
 				}
 				
 				if(pf.getGamesPlayed() == 11) {
@@ -148,7 +150,8 @@ public class LeagueGameGui {
 		
 				}
 				
-				JOptionPane.showMessageDialog(null, "You finished in " + playerIndex + "Position" );
+				
+				
 				
 				//}
 				
@@ -190,7 +193,7 @@ public class LeagueGameGui {
 		public static void getPlayerIndex(County[] table){
 			
 			for(int i = 0 ; i < table.length; i ++){
-				
+				sortTable(table);
 				if(table[i].getcountyName() == plCounty){
 					
 					playerIndex = i;

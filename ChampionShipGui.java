@@ -20,6 +20,7 @@ public class ChampionShipGui {
 	Container cPane;
 	JButton nextGameBtn;
 	JButton saveGameBtn;
+	JButton qtrFinBtn;
 	
 	public static String plName;
 	public static String plCounty;
@@ -64,6 +65,9 @@ public class ChampionShipGui {
 		// Buttons
 		cPane.add(nextGameBtn = new JButton("Play Next Game"));
 		cPane.add(saveGameBtn = new JButton("Save Game"));
+		qtrFinBtn = new JButton("Finals");
+		qtrFinBtn.setVisible(false);
+		cPane.add(qtrFinBtn);
 		frame.add(cPane);
 		
 		// Positioning of components
@@ -74,7 +78,8 @@ public class ChampionShipGui {
 		group3TA.setBounds(470, 20, 300, 250);
 		group4TA.setBounds(470, 300, 300, 250);
 		saveGameBtn.setBounds(150, 600, 150, 50);
-		nextGameBtn.setBounds (500, 600, 150, 50);
+		nextGameBtn.setBounds (350, 600, 150, 50);
+		qtrFinBtn.setBounds(500, 600, 150, 50);
 		
 		
 		
@@ -85,10 +90,15 @@ public class ChampionShipGui {
 		County [] group4Counties = new County[8];
 		
 		// Pool for Quarter Finals
-		County [] poolA = new County[1];
-		County [] poolB = new County[1];
-		County [] poolC = new County[1];
-		County [] poolD = new County[1];
+		County [] poolA = new County[2];
+		County [] poolB = new County[2];
+		County [] poolC = new County[2];
+		County [] poolD = new County[2];
+		
+		
+		// Semi Finals arrays
+		County [] semiFinal1 = new County[2];
+		County [] semiFinal2 = new County[2];
 		
 		// Put the player county in group1
 		group1Counties[0] = new County();
@@ -224,28 +234,107 @@ public class ChampionShipGui {
 							group1TA.append("\n" + group1Counties[j].toString());
 						}
 						
-					
+					qtrFinBtn.setVisible(true);
 					}
 			
+					
 					
 				});// End of ActionListener
 		
 				// Quaterfinals
 				// Initialization of Pools
-				poolA[0]= group1Counties[0];
-				poolA[1]= group2Counties[0];
-				poolB[0]= group1Counties[1];
-				poolB[1]= group2Counties[1];
-				poolC[0] = group3Counties[0];
-				poolC[1] = group4Counties[0];
-				poolD[0] = group3Counties[1];
-				poolD[0] = group4Counties[1];
-				
+				qtrFinBtn.addActionListener(new ActionListener() {
 
+					public void actionPerformed(ActionEvent e) {
+						
+						// Pool A
+						poolA[0] = group1Counties[0];
+						poolA[1] = group2Counties[0];
+						
+						// Pool B
+						poolB[0] = group1Counties[1];
+						poolB[1] = group2Counties[1];
+						
+						// Pool C
+						poolC[0] = group3Counties[0];
+						poolC[1] = group4Counties[0];
+						
+						// Pool D
+						poolD[0] = group3Counties[1];
+						poolD[1] = group4Counties[1];
+				
+				
+				// Play game and sort tables and Display Winners of Each Game
+				// First Quater Final
+				JOptionPane.showMessageDialog(null, "All Ireland Quarter Finals Day");
 				playGame(poolA[0],poolA[1]);
+				sortTable(poolA);
+				JOptionPane.showMessageDialog(null, "Quarter Final Game 1: " + poolA[0].getcountyName() + " V " + poolA[1].getcountyName()  );
+				JOptionPane.showMessageDialog(null, "Winner " + poolA[0].getcountyName());
+				
+				// Second Quarter Final
 				playGame(poolB[0],poolB[1]);
+				sortTable(poolB);
+				JOptionPane.showMessageDialog(null, "Quarter Final Game 2: " + poolB[0].getcountyName() + " V " + poolB[1].getcountyName()  );
+				JOptionPane.showMessageDialog(null, "Winner " + poolB[0].getcountyName());
+				
+				// Third Quarter Final
 				playGame(poolC[0],poolC[1]);
+				sortTable(poolC);
+				JOptionPane.showMessageDialog(null, "Quarter Final Game 3: " + poolC[0].getcountyName() + " V " + poolC[1].getcountyName()  );
+				JOptionPane.showMessageDialog(null, "Winner " + poolC[0].getcountyName());
+				
+				// Fourth Quarter Final
 				playGame(poolD[0],poolD[1]);
+				sortTable(poolD);
+				JOptionPane.showMessageDialog(null, "Quarter Final Game 4: " + poolD[0].getcountyName() + " V " + poolD[1].getcountyName()  );
+				JOptionPane.showMessageDialog(null, "Winner " + poolD[0].getcountyName());
+				
+				
+				// Just Need one Array to hold four teams..
+				// I shouldn't have created so many pool objects for the quarter finals
+					
+					
+					semiFinal1[0] = poolA[0];
+					semiFinal1[1] = poolB[0];
+					
+					semiFinal2[0] = poolC[0];
+					semiFinal2[1] = poolD[0];
+					
+					// First Semi Final match
+					JOptionPane.showMessageDialog(null, "All Ireland Semi Finals Day");
+					playGame(semiFinal1[0],semiFinal1[1]);
+					sortTable(semiFinal1);
+					JOptionPane.showMessageDialog(null, "Semi Final Game 1: " + semiFinal1[0].getcountyName() + " V " + semiFinal1[1].getcountyName()  );
+					JOptionPane.showMessageDialog(null, "Winner " + semiFinal1[0].getcountyName());	
+				
+					
+					// Second Semi Final match
+					playGame(semiFinal2[0],semiFinal2[1]);
+					sortTable(semiFinal2);
+					JOptionPane.showMessageDialog(null, "Semi Final Game 2: " + semiFinal2[0].getcountyName() + " V " + semiFinal2[1].getcountyName()  );
+					JOptionPane.showMessageDialog(null, "Winner " + semiFinal2[0].getcountyName());
+				
+						//Final
+				
+					  County [] champFinal = new County[2];
+					  
+					  champFinal[0] = semiFinal1[0];
+					  champFinal[1] = semiFinal2[0];
+					  
+					  // Final Game
+					JOptionPane.showMessageDialog(null, "All Ireland Final Day"  );
+					playGame(champFinal[0],champFinal[1]);
+					sortTable(champFinal);
+					JOptionPane.showMessageDialog(null, "Championship Final  " + champFinal[0].getcountyName() + " V " + champFinal[1].getcountyName()  );
+					JOptionPane.showMessageDialog(null, "All Ireland Winner  " + champFinal[0].getcountyName());
+					  
+				
+				
+				
+						
+					}
+				});
 				
 				
 				
@@ -332,8 +421,8 @@ public class ChampionShipGui {
 			// Display the player Games
 			if(countyA.getcountyName() == plCounty){
 			
-			JOptionPane.showMessageDialog(null, countyA.getcountyName() + " V " + countyB.getcountyName() );
-			JOptionPane.showMessageDialog(null, "Score: " + countyA.getcountyName() +" "+ a + ":" + " " + b + "\t " + countyB.getcountyName() + c + ":" + d );
+			//JOptionPane.showMessageDialog(null, countyA.getcountyName() + " V " + countyB.getcountyName() );
+			//JOptionPane.showMessageDialog(null, "Score: " + countyA.getcountyName() +" "+ a + ":" + " " + b + "\t " + countyB.getcountyName() + c + ":" + d );
 			
 			}
 			
