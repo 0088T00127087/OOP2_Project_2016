@@ -3,6 +3,13 @@ import java.awt.Container;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,7 +26,7 @@ import javax.swing.JTextArea;
  * This page will hold the table for the counties
  * 
  */
-public class LeagueGameGui {
+public class LeagueGameGui implements Serializable {
 
 	// instance Variables
 	JFrame frame;
@@ -34,13 +41,13 @@ public class LeagueGameGui {
 	public static int numGames = 1;
 	JTextArea table;
 	
-	public LeagueGameGui(PlayerProfile pf){
+	public LeagueGameGui(PlayerProfile pf) throws IOException, FileNotFoundException{
 		
 		// Frame instantiation and values
 		frame =  new JFrame("GAA League Division One");
-		frame.setSize(500, 500);
+		frame.setSize(600, 600);
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLocation(150,150);
 		
 		
@@ -53,7 +60,7 @@ public class LeagueGameGui {
 		cPane.add(nameLbl = new JLabel("Manager: " + plName));
 		cPane.add(countyLbl = new JLabel("County: " + plCounty));
 		cPane.add(table = new JTextArea());
-		cPane.add(nextGameBtn = new JButton("Play Next Game"));
+		cPane.add(nextGameBtn = new JButton("Generate League Results"));
 		cPane.add(saveGameBtn = new JButton("Save Game"));
 		frame.add(cPane);
 		
@@ -63,11 +70,11 @@ public class LeagueGameGui {
 		countyLbl.setBounds(25, 20, 100, 100);
 		table.setBounds(150, 10, 300, 300);
 		saveGameBtn.setBounds(100, 320, 150, 50);
-		nextGameBtn.setBounds (300, 320, 150, 50);
+		nextGameBtn.setBounds (300, 320, 200, 50);
 		
 		// Create an array to hold the counties
 		Random rand = new Random();
-		County [] county = new County[12];
+		County [] county = new County[16];
 		
 		// Set the first object in the array to the playerprofile created
 		county[0] = new County();
@@ -99,6 +106,30 @@ public class LeagueGameGui {
 			county[i].setPoints(0);
 				 
 		}
+		
+		
+		// Saving the array of county objects 
+		saveGameBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			
+				
+						try {
+							saveGame(county);
+							JOptionPane.showMessageDialog(null, "Saved");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+			
+				
+				
+			}
+		});
+		
+			
+		
+		
 		
 		table.append("County \t\t            Games  Points");
 		table.append("\n--------------------------------------------------------------------------");
@@ -188,8 +219,11 @@ public class LeagueGameGui {
 		
 	}// End of Constructor
 	
-	// method to find the players team in the table
 	
+	
+	
+	
+		// method to find the players team in the table
 		public static void getPlayerIndex(County[] table){
 			
 			for(int i = 0 ; i < table.length; i ++){
@@ -202,8 +236,22 @@ public class LeagueGameGui {
 				
 			}
 		}
+		
+		// Method to save the table and player profile
+		
+		public static void saveGame(County [] county)throws IOException, FileNotFoundException{
+			
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("league.dat"));
+			out.writeObject(county);
+			JOptionPane.showMessageDialog(null, "Game Saved");
+			
+		}
+		
+		
+
+		
 	
-	
+		// Method for sorting the table according to highest points
 		public static void sortTable(County[] table){
 			County temp = new County();
 			int size = table.length;
