@@ -119,10 +119,18 @@ public class LeagueGameGui {
 				
 				//JOptionPane.showMessageDialog(null, pf.toString());
 				
-				if(numGames < 12){
+				/*if(numGames < 12){
 				playGame(county[playerIndex], county[numGames]);
 				pf.setGamesPlayed(pf.gamesPlayed+1);
 				numGames++;
+				
+				*/
+				for(int i = 0; i < county.length - 1; i++) {
+				     for(int j = i+1; j < county.length; j++) {
+				         playGame(county[i], county[j]);
+				     }
+				}
+				
 				
 				
 				
@@ -134,38 +142,17 @@ public class LeagueGameGui {
 					sortTable(county);
 					table.append("\n" + county[i].toString());
 				}
+				
 				if(pf.getGamesPlayed() == 11) {
 					JOptionPane.showMessageDialog(null, "No More games to play this season");
-					
-					for(int i = 0; i < county.length; i++){
-						for(int j = 1; j < county.length-i; j++){
-							if(county[i].getGamesPlayed() == 11){
-								playGame(county[j], county[i]);
-								county[1].setGamesPlayed(county[1].gamesPlayed + 1);
-								
-								table.setText("");
-								table.append("County \t\t            Games  Points");
-								table.append("\n--------------------------------------------------------------------------");
-								
-								for(int x = 0; x < county.length; x++){
-									sortTable(county);
-									table.append("\n" + county[x].toString());
-								}
-								
-								
-								
-								
-							}
-						}
-						
-					}
-					
-					
+		
 				}
 				
-				}
+				JOptionPane.showMessageDialog(null, "You finished in " + playerIndex + "Position" );
 				
+				//}
 				
+		
 				
 			}
 		});
@@ -190,15 +177,17 @@ public class LeagueGameGui {
 		//table.append(updateTable);
 		
 		
+	
 		
-		
+	for(int i = 0; i < county.length; i++){
+		System.out.println(county[i].toString() + "Index: " + i);
 	}
+		
+	}// End of Constructor
 	
 	// method to find the players team in the table
 	
 		public static void getPlayerIndex(County[] table){
-			
-			County c = new County();
 			
 			for(int i = 0 ; i < table.length; i ++){
 				
@@ -266,8 +255,8 @@ public class LeagueGameGui {
 		c = goalGenerator();
 		d = pointGenerator();
 		
-		JOptionPane.showMessageDialog(null, countyA.getcountyName() + " V " + countyB.getcountyName() );
-		JOptionPane.showMessageDialog(null, "Score" + countyA.getcountyName() + a + ":" + b + "\t" + countyB.getcountyName() + c + ":" + d );
+		//JOptionPane.showMessageDialog(null, countyA.getcountyName() + " V " + countyB.getcountyName() );
+		//JOptionPane.showMessageDialog(null, "Score" + countyA.getcountyName() + a + ":" + b + "\t" + countyB.getcountyName() + c + ":" + d );
 		
 		
 		

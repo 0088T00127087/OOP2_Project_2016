@@ -24,7 +24,8 @@ public class ChampionShipGui {
 	public static String plName;
 	public static String plCounty;
 	public static int playerIndex = 0;
-	public static int numGames = 1;
+	
+	private static int countyIndex;
 	
 	JLabel nameLbl;
 	JLabel countyLbl;
@@ -83,6 +84,11 @@ public class ChampionShipGui {
 		County [] group3Counties = new County[8];
 		County [] group4Counties = new County[8];
 		
+		// Pool for Quarter Finals
+		County [] poolA = new County[1];
+		County [] poolB = new County[1];
+		County [] poolC = new County[1];
+		County [] poolD = new County[1];
 		
 		// Put the player county in group1
 		group1Counties[0] = new County();
@@ -131,10 +137,10 @@ public class ChampionShipGui {
 					}
 					group2Counties[i].setGamesPlayed(0);
 					group2Counties[i].setPoints(0);
-						 
+					
 				}
 				group2TA.append("County\t\tGames  Points");
-				group2TA.append("\n-----------------------------------------------------------------");
+				group2TA.append("\n-----------------------------------------------------------------");	 
 				
 				
 				// Initialise Group3
@@ -186,75 +192,69 @@ public class ChampionShipGui {
 			
 				// Game generation in each group
 				
+				playGroupGame(group2Counties, group2TA);
+				playGroupGame(group2Counties, group2TA);
+				playGroupGame(group3Counties, group3TA);
+				playGroupGame(group4Counties, group4TA);
+				
+				
+				
+				
 				nextGameBtn.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
-						// Group one Games
-						
-						getPlayerIndex(group1Counties);
-						
-						if(numGames < 8){
-							if(pf.getcountyName() == group1Counties[numGames].getcountyName()){
-								numGames++;
-							}
 							
-							else
-								playGame(group1Counties[playerIndex], group1Counties[numGames]);
-								numGames++;
-						}
 						
-						//playGame(group1Counties[playerIndex], group1Counties[index]);
+						for(int i = 0; i < group1Counties.length - 1; i++) {
+								for(int j = i+1; j < group1Counties.length; j++) {
+											playGame(group1Counties[i], group1Counties[j]);
+	
+											
+							}
+	
+					}
+							
+						
 						group1TA.setText("");
 						group1TA.append("County\t\tGames  Points");
 						group1TA.append("\n-----------------------------------------------------------------");
 						
-						for(int i = 0; i < group1Counties.length; i++){
+						for(int j = 0; j < group1Counties.length; j++){
 							sortTable(group1Counties);
-							group1TA.append("\n" + group1Counties[i].toString());
+							//getCountyIndex(group1Counties);
+							group1TA.append("\n" + group1Counties[j].toString());
 						}
 						
-						playGroupGame(group2Counties, group2TA);
-						
-
+					
 					}
-					
-					//End Group One Games *************************************************************************
-					
-					
-					
-					
+			
 					
 				});// End of ActionListener
 		
+				// Quaterfinals
+				// Initialization of Pools
+				poolA[0]= group1Counties[0];
+				poolA[1]= group2Counties[0];
+				poolB[0]= group1Counties[1];
+				poolB[1]= group2Counties[1];
+				poolC[0] = group3Counties[0];
+				poolC[1] = group4Counties[0];
+				poolD[0] = group3Counties[1];
+				poolD[0] = group4Counties[1];
+				
+
+				playGame(poolA[0],poolA[1]);
+				playGame(poolB[0],poolB[1]);
+				playGame(poolC[0],poolC[1]);
+				playGame(poolD[0],poolD[1]);
+				
+				
+				
 		
 		
 				
 		
 		
 	}// End of Constructor
-	
-		
-	public static void groupGames(County[] group, JTextArea jt){
-		
-		for(int i =0; i < group.length; i++){
-			
-			for(int j = 0; j < group.length - i; j++){
-				sortTable(group);
-				playGame(group[i], group[j]);
-				jt.setText("");
-				jt.append("County\t\tGames  Points");
-				jt.append("\n-----------------------------------------------------------------");
-				jt.append("\n" + group[j].toString());
-			}
-		}
-		
-		
-	}
-	
-	
-	
-	
-	
-	
 	
 	
 		
@@ -319,6 +319,8 @@ public class ChampionShipGui {
 			//int gamesPlayed = 0;
 			int a, b, c, d;
 			
+			
+			
 			countyA.setGamesPlayed(countyA.gamesPlayed + 1);
 			countyB.setGamesPlayed(countyB.gamesPlayed + 1);
 			
@@ -327,10 +329,13 @@ public class ChampionShipGui {
 			c = goalGenerator();
 			d = pointGenerator();
 			
+			// Display the player Games
+			if(countyA.getcountyName() == plCounty){
+			
 			JOptionPane.showMessageDialog(null, countyA.getcountyName() + " V " + countyB.getcountyName() );
 			JOptionPane.showMessageDialog(null, "Score: " + countyA.getcountyName() +" "+ a + ":" + " " + b + "\t " + countyB.getcountyName() + c + ":" + d );
 			
-			
+			}
 			
 			
 			if(a+b > c+d){
@@ -357,83 +362,55 @@ public class ChampionShipGui {
 		}
 	
 		}// End of Method playGame
+			
+			
+			
+			// Method for group games
 		
-			private static void playGroupGame(County [] group, JTextArea table ){
-				
-				//int gamesPlayed = 0;
-				int a, b, c, d;
-				
-				
-				
-				a = goalGenerator();
-				b = pointGenerator();
-				c = goalGenerator();
-				d = pointGenerator();
-				
-				
-				
-				
-				
-				
-				//JOptionPane.showMessageDialog(null, countyA.getcountyName() + " V " + countyB.getcountyName() );
-				//JOptionPane.showMessageDialog(null, "Score: " + countyA.getcountyName() + a + " : " + b + "\t " + countyB.getcountyName() + c + " : " + d );
-				
-				for(int i = 0; i < group.length; i++){
-					for(int j = 1; j < group.length -i; j++){
-						County temp = new County();
-						playGame(group[i], group[j]);
+			private static void playGroupGame(County [] group, JTextArea table){
+	
+					
+						table.setText("");
+						table.append("County\t\tGames  Points");
+						table.append("\n-----------------------------------------------------------------");
 						
-						group[i].setGamesPlayed(group[i].gamesPlayed + 1);
-						group[j].setGamesPlayed(group[j].gamesPlayed + 1);
 					
+						
+						for(int i = 0; i < group.length - 1; i++) {
+						     for(int j = i+1; j < group.length; j++) {
+						         playGame(group[i], group[j]);
+						     }
+						}
+						
+						for(int e = 0; e < group.length; e++){
+						sortTable(group);
+						table.append("\n" + group[e].toString());
 				
-					
-				
-				
-				
-				if(a+b > c+d){
-					group[i].setPoints(group[i].points + 3);
-					
-					//JOptionPane.showMessageDialog(null, countyA.getName()+ " is the Winnner!!");
-					//JOptionPane.showMessageDialog(null, countyA.toString());
-					
-				}
-				
-				if(a + b < c + d) {
-					group[j].setPoints(group[j].points + 3);
-					//JOptionPane.showMessageDialog(null, countyB.getName() + " is the Winner!!");
-					//JOptionPane.showMessageDialog(null, countyB.toString());
-				}
-				else if (a+b == c+d){
-					group[i].setPoints(group[i].points + 1);
-					group[j].setPoints(group[j].points + 1);
-					//JOptionPane.showMessageDialog(null, "The Game was a Draw!!");
-					//JOptionPane.showMessageDialog(null, countyA.toString() + "\n" + countyB.toString());
-				}
-				
-				
-				for(int x = 0; x < group.length; i++){
-					sortTable(group);
-					table.setText("");
-					table.append("County\t\tGames  Points");
-					table.append("\n-----------------------------------------------------------------");
-					table.append("\n" + group[x].toString());
-				}
-				
-				
-				
-				
-				
-				}// End of inner For loop
-					
-				
-			}// End of outer for loop
+				}// End of outer for loop
 		
 				
 			}// End of Method playGame
 			
 			
-	
+			//Method to sort counties by number of games played
+			public static void getCountyIndex(County [] group){
+				County temp = new County();
+				int size = group.length;
+				
+				for(int pass = 1; pass < size; pass++){
+					for(int i = 0; i < size-pass; i++){
+						if(group[i].getGamesPlayed() < group[i+1].getGamesPlayed()){
+							temp = group[i];
+							group[i] = group[i+1];
+							group[i+1] = temp;
+							
+							
+						
+						}
+					}
+				}
+				
+			}
 	
 	
 }// End of Class
