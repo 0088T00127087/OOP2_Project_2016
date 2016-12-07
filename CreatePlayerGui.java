@@ -18,7 +18,7 @@ import javax.swing.event.ListSelectionListener;
  * Joe Enright
  * Gui to create a player profile
  */
-public class CreatePlayerGui implements ActionListener {
+public class CreatePlayerGui  {
 	
 	// Instance Variables
 	JFrame frame;
@@ -94,46 +94,60 @@ public class CreatePlayerGui implements ActionListener {
 		listCounties.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listCounties.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-			  index = listCounties.getSelectedIndex();
-			  pf.setcountyName(counties[index]);
+			 
+				
+				
+				
+				index = listCounties.getSelectedIndex();
+				pf.setcountyName(counties[index]);
 				
 			}
 		});
 	
+		
+			
+		
+		
 		
 		// To Start the game and create a new player profile
 		startBtn.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e){
 				
-				if(nameTxtBox.getText() == ""){
+				// Some Validation
+				String str = "";
+				String str2 = "unknown";
+				
+				if(nameTxtBox.getText().equals(str)){
 					JOptionPane.showMessageDialog(null, "Please enter a name");
-					nameTxtBox.getFocusListeners();
+					 
+				}
+				if(pf.getcountyName().equals(str2)){
+					JOptionPane.showMessageDialog(null, "Please select a county");
+					
 				}
 				
-				pf.setName(nameTxtBox.getText());
-				pf.setGamesPlayed(0);
-				System.out.println(pf.toString());
-				// Passing into the constructor by reference to the instance of the object created above
-				GameTypeGui ng = new GameTypeGui(pf);
 				
+				
+				else {
+				pf.setName(nameTxtBox.getText());
+				
+				pf.setGamesPlayed(0);
+				//System.out.println(pf.toString());
+				// Passing into the constructor by reference to the instance of the object created above
+				try {
+					GameTypeGui ng = new GameTypeGui(pf);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				}
 			}
 		});
-	
-	
-	// code for position of J components was taken from https://docs.oracle.com/javase/tutorial/uiswing/layout/none.html
-	
-	
-
-	
-	}
-	
-	
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
+		
+	
+	
 	
 	
 	

@@ -1,11 +1,12 @@
+import java.io.Serializable;
 
-public class County {
+public class County implements Serializable{
 
 	public String countyName;
 	public int points;
 	public int gamesPlayed;
 	
-	public County(){
+	public County() {
 		countyName = "unknown";
 		points = 0;
 		gamesPlayed = 0;
@@ -47,7 +48,7 @@ public class County {
 	
 	
 	public String toString(){
-		return getcountyName() + " \t\t " + getGamesPlayed() + "\t\t   "+ getPoints();
+		return getcountyName() + "\t\t               | " + getGamesPlayed() + "    |   "+ getPoints();
 	}
 	
 	

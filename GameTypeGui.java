@@ -1,7 +1,10 @@
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,7 +15,7 @@ import javax.swing.JLabel;
  * Gui for league game type
  * 
  */
-public class GameTypeGui extends CreatePlayerGui implements ActionListener {
+public class GameTypeGui  {
 
 	JFrame frame;
 	Container cPane;
@@ -21,14 +24,14 @@ public class GameTypeGui extends CreatePlayerGui implements ActionListener {
 	JLabel nameLbl;
 	JLabel countyLbl;
 	
-	public GameTypeGui(PlayerProfile pf){
+	public GameTypeGui(PlayerProfile pf)throws Exception, FileNotFoundException{
 		
 	//PlayerProfile pf1 = new PlayerProfile();	
 	
 	frame =  new JFrame("Choose a Game Type");
 	frame.setSize(500, 500);
 	frame.setVisible(true);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	frame.setLocation(150,150);
 	
 	
@@ -59,6 +62,31 @@ public class GameTypeGui extends CreatePlayerGui implements ActionListener {
 	
 	
 	
+	leagueBtn.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			
+			
+				
+					try {
+						LeagueGameGui leagueGame = new LeagueGameGui(pf);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+			
+		}
+	});
+	
+	
+	
+	champBtn.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			ChampionShipGui champGame = new ChampionShipGui(pf);
+			
+		}
+	});
 	
 	
 	
@@ -67,10 +95,6 @@ public class GameTypeGui extends CreatePlayerGui implements ActionListener {
 	}
 	
 	
-	public void playerProfile(PlayerProfile pf){
-		
-		pf.toString();
-	}
 	
 	
 	

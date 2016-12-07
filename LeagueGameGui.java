@@ -112,11 +112,8 @@ public class LeagueGameGui implements Serializable {
 		saveGameBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-			
-				
 						try {
-							saveGame(county);
-							JOptionPane.showMessageDialog(null, "Saved");
+							saveGame(county, pf);
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -127,9 +124,6 @@ public class LeagueGameGui implements Serializable {
 			}
 		});
 		
-			
-		
-		
 		
 		table.append("County \t\t            Games  Points");
 		table.append("\n--------------------------------------------------------------------------");
@@ -138,7 +132,7 @@ public class LeagueGameGui implements Serializable {
 			table.append("\n" + county[i].toString());
 		}
 		
-		getPlayerIndex(county);
+		//getPlayerIndex(county);
 		
 		
 		
@@ -147,16 +141,7 @@ public class LeagueGameGui implements Serializable {
 				
 				
 				
-				
-				//JOptionPane.showMessageDialog(null, pf.toString());
-				
-				/*if(numGames < 12){
-				playGame(county[playerIndex], county[numGames]);
-				pf.setGamesPlayed(pf.gamesPlayed+1);
-				numGames++;
-				
-				*/
-				for(int i = 0; i < county.length - 1; i++) {
+			for(int i = 0; i < county.length - 1; i++) {
 				     for(int j = i+1; j < county.length; j++) {
 				         playGame(county[i], county[j]);
 				     }
@@ -239,10 +224,11 @@ public class LeagueGameGui implements Serializable {
 		
 		// Method to save the table and player profile
 		
-		public static void saveGame(County [] county)throws IOException, FileNotFoundException{
+		public static void saveGame(County [] county, PlayerProfile pf)throws IOException, FileNotFoundException{
 			
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("league.dat"));
 			out.writeObject(county);
+			out.writeObject(pf);
 			JOptionPane.showMessageDialog(null, "Game Saved");
 			
 		}
